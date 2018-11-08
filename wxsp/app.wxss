@@ -1,0 +1,14 @@
+/**app.wxss**/
+<<<<<<< HEAD
+
+=======
+>>>>>>> 9601e762ce702872f8fe3615577bdc0ddb04cff8
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
