@@ -1,6 +1,6 @@
 /**index.wxss**/
+
 .userinfo {
-<<<<<<< HEAD
   /* display: flex;
   flex-direction: column;
   align-items: center; */
@@ -29,18 +29,6 @@
   top: -85px;
   /* right: 0px; */
   /* bottom: 0px; */
-=======
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
->>>>>>> 9601e762ce702872f8fe3615577bdc0ddb04cff8
 }
 
 .userinfo-nickname {
@@ -48,9 +36,5 @@
 }
 
 .usermotto {
-<<<<<<< HEAD
-  margin-top: 10px;
-=======
   margin-top: 200px;
->>>>>>> 9601e762ce702872f8fe3615577bdc0ddb04cff8
 }

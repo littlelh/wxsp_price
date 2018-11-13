@@ -16,10 +16,6 @@ Page({
     })
   },
   onLoad: function () {
-<<<<<<< HEAD
-=======
-    console.log('222222')
->>>>>>> 9601e762ce702872f8fe3615577bdc0ddb04cff8
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

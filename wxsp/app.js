@@ -13,21 +13,12 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         if (res.code) {
           console.log("code:" + res.code)
-<<<<<<< HEAD
-=======
-          
->>>>>>> 9601e762ce702872f8fe3615577bdc0ddb04cff8
         } else {
           console.log('登录失败' + res.errMsg)
         }
       }
     })
 
-<<<<<<< HEAD
-=======
-    console.log("111111")
-
->>>>>>> 9601e762ce702872f8fe3615577bdc0ddb04cff8
     // 获取用户信息
     wx.getSetting({
       success: res => {
