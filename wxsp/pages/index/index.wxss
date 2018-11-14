@@ -5,15 +5,15 @@
   flex-direction: column;
   align-items: center; */
   width: 750rpx;
-  height: 100rpx;
+  height: 110rpx;
   background-color: rgb(60, 150, 170);
   position: absolute;
-  left: 30px;
-  top: -100px;
+  /* position: relative; */
+  left: 0rpx;
+  top: 0rpx;
   /* padding: 20px; */
   /* background-image: url */
   /* background-position:center; */
-  position: relative;
   /* min-height: 100px; */
   /* font-size: 24px; */
   color: black;
@@ -25,14 +25,32 @@
   /* margin: 20rpx; */
   border-radius: 50%;
   position: relative;
-  left: 10px;
-  top: -85px;
+  left: 25rpx;
+  top: 15rpx;
   /* right: 0px; */
   /* bottom: 0px; */
 }
 
 .userinfo-nickname {
-  color: #aaa;
+  color: rgb(255, 255, 255);
+  position: relative;
+  left: 50rpx;
+  top: -30rpx;
+  font-size: 30rpx;
+}
+
+.product-input {
+  position: relative;
+  left: 390rpx;
+  top: -40rpx;
+  width: 320rpx;
+  height: 1.2rem;
+  min-height: 1.2rem;
+  border: 2rpx solid rgba(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  /* margin: 100rpx auto; 可让水平居中*/
+  border-radius:20rpx; 
+  font-size: 30rpx;
 }
 
 .usermotto {

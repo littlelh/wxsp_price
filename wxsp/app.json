@@ -5,7 +5,7 @@
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarBackgroundColor": "#3C96AA",
     "navigationBarTitleText": "简通",
     "navigationBarTextStyle":"black"
   },
@@ -13,16 +13,16 @@
     "position": "bottom",
     "backgroundColor": "#ffffff",
     "color": "#a9b7b7",
-    "selectedColor": "#11cd6e",
+    "selectedColor": "#3C96AA",
     "list": [
       {
-        "selectedIconPath": "images/house.png",
+        "selectedIconPath": "images/house-select.png",
         "iconPath": "images/house.png",
         "pagePath": "pages/index/index",
         "text": "主页"
       },
       {
-        "selectedIconPath": "images/setting.png",
+        "selectedIconPath": "images/setting-select.png",
         "iconPath": "images/setting.png",
         "pagePath": "pages/logs/logs",
         "text": "设置"
