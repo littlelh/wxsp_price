@@ -2,7 +2,8 @@
 
 <view class="container">
   <view class="userinfo">
-    <block wx:if="{{!hasUserInfo && canIUse}}"></block>
+    <!-- <block wx:if="{{!hasUserInfo && canIUse}}"></block> -->
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>

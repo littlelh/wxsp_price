@@ -43,11 +43,16 @@ Page({
     }
   },
   getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
+    if (e.detail.userInfo) {
+      console.log(e)
+      app.globalData.userInfo = e.detail.userInfo,
+      app.globalData.isAuth = true
+      this.setData({
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true
+      })
+    } else {
+      app.globalData.isAuth = false
+    }
   }
 })
