@@ -2,13 +2,8 @@
 
 <view class="container">
   <view class="userinfo">
-    <block wx:if="{{!hasUserInfo && canIUse}}"></block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      <!-- <view class="section_title">{{inputValue}}</view> -->
-      <input class="product-input" bindconfirm="ProductNameInput" placeholder="请输入想查找的产品" placeholder-style="color:#e2e2e2" value="{{inputValue}}"></input>
-    </block>
+    <!-- <view class="section_title">{{inputValue}}</view> -->
+    <input class="product-input" bindconfirm="ProductNameInput" placeholder="请输入想查找的产品" placeholder-style="color:#e2e2e2" value="{{inputValue}}"></input>
   </view>
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
