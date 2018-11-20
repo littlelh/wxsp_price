@@ -2,8 +2,11 @@
 
 <view class="container">
   <view class="userinfo">
-    <!-- <block wx:if="{{!hasUserInfo && canIUse}}"></block> -->
-    <button wx:if="{{!hasUserInfo && canIUse}}" class="login_botton" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+    <block wx:if="{{!hasUserInfo && canIUse}}">
+      <!-- <button wx:if="{{!hasUserInfo && canIUse}}" class="login_botton" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button> -->
+      <image class="not-login-avatar" src="../../images/not-login.png"></image>
+      <button class="login_botton" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
+    </block>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>

@@ -3,12 +3,13 @@
 .product-input {
   /* position: relative; */
   position: absolute;
-  left: 5rpx;
-  top: 5rpx;
-  width: 740rpx;
-  height: 1.2rem;
-  min-height: 1.2rem;
-  border: 2rpx solid rgba(0, 0, 0);
+  left: 15rpx;
+  top: 10rpx;
+  width: 720rpx;
+  height: 1.4rem;
+  min-height: 1.4rem;
+  /* border: 2rpx solid rgba(0, 0, 0); */
+  border: 2rpx solid rgb(88, 84, 84);
   background-color: rgb(255, 255, 255);
   /* background-color: rgb(60, 150, 170); */
   /* margin: 100rpx auto; 可让水平居中*/

@@ -8,7 +8,7 @@
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#3C96AA",
     "navigationBarTitleText": "简通",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"light"
   },
   "tabBar": {
     "position": "bottom",
