@@ -9,7 +9,7 @@
   background-color: rgb(60, 150, 170);
   position: absolute;
   /* position: relative; */
-  left: 0rpx;
+  left: rpx;
   top: 0rpx;
   /* padding: 20px; */
   /* background-image: url */
@@ -17,6 +17,23 @@
   /* min-height: 100px; */
   /* font-size: 24px; */
   color: black;
+}
+
+.login_botton {
+  position: absolute;
+  width: 80rpx;
+  height: 50rpx;
+  top: 10rpx;
+  left: 200rpx;
+  /* margin-top: 20rpx; */
+  background-color: beige;
+  color: white;
+  border-radius: 90rpx;
+}
+
+.login_botton::after {
+  border-radius: 98rpx;
+  border: 0; /* 取消边框 */
 }
 
 .userinfo-avatar {
