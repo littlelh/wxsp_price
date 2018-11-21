@@ -34,7 +34,7 @@ Page({
       console.log(1);
     }, 1000)
   },
-  ProductNameInput: function (e) {
+  SearchInput: function (e) {
     this.setData({
       product_name: e.detail.value,
       inputValue: '',

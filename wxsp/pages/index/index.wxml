@@ -1,9 +1,12 @@
 <!--index.wxml-->
 
 <view class="container">
-  <view class="userinfo">
-    <!-- <view class="section_title">{{inputValue}}</view> -->
-    <input class="product-input" bindconfirm="ProductNameInput" placeholder="请输入想查找的产品" placeholder-style="color:#e2e2e2" value="{{inputValue}}"></input>
+  <view class="search">
+    <view class="searchItem">
+      <!-- <view class="section_title">{{inputValue}}</view> -->
+      <image class="search-img" src="../../images/search.png"></image>
+      <input class="search-input" bindconfirm="SearchInput" placeholder="请输入想查找的产品" placeholder-style="color:#e2e2e2" value="{{inputValue}}"></input>
+    </view>
   </view>
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>

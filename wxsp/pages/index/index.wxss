@@ -1,20 +1,37 @@
 /**index.wxss**/
 
-.product-input {
-  /* position: relative; */
-  position: absolute;
-  left: 15rpx;
-  top: 10rpx;
-  width: 720rpx;
-  height: 1.4rem;
-  min-height: 1.4rem;
-  /* border: 2rpx solid rgba(0, 0, 0); */
-  border: 2rpx solid rgb(88, 84, 84);
-  background-color: rgb(255, 255, 255);
-  /* background-color: rgb(60, 150, 170); */
-  /* margin: 100rpx auto; 可让水平居中*/
-  border-radius:20rpx;
-  font-size: 30rpx;
+.search {
+    display: flex;
+    flex-direction: row;
+    height: 98rpx;
+    background: #efeff4;
+    align-items: center;
+    /* margin-top: 5rpx; */
+}
+
+.searchItem {
+    display: flex;
+    width: 680rpx;
+    /* width: 100%; */
+    background: #fff;
+    flex-direction: row;
+    border-radius: 10rpx;
+    margin-right: 20rpx;
+    margin-left: 20rpx;
+}
+
+.search-img {
+    height: 42rpx;
+    width: 42rpx;
+    align-self: center;
+    margin-left: 10rpx;
+    margin-right: 20rpx;
+}
+
+search-input {
+    flex: 1;
+    /* width: 600rpx; */
+    font-size: 30rpx;
 }
 
 .usermotto {
