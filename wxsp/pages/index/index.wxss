@@ -1,9 +1,18 @@
 /**index.wxss**/
 
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 1110rpx;
+  align-items: center;
+  background: #afafe0;
+  justify-content: flex-start;
+}
+
 .search {
     display: flex;
     flex-direction: row;
-    height: 98rpx;
+    height: 80rpx;
     background: #efeff4;
     align-items: center;
     /* margin-top: 5rpx; */
@@ -11,11 +20,11 @@
 
 .searchItem {
     display: flex;
-    width: 680rpx;
+    width: 710rpx;
     /* width: 100%; */
     background: #fff;
     flex-direction: row;
-    border-radius: 10rpx;
+    border-radius: 50rpx;
     margin-right: 20rpx;
     margin-left: 20rpx;
 }
