@@ -3,46 +3,52 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 1110rpx;
+  height: 1070rpx;
   align-items: center;
-  background: #afafe0;
+  /* background:#cee6d2; */
+  padding: 0rpx;
   justify-content: flex-start;
 }
 
 .search {
-    display: flex;
-    flex-direction: row;
-    height: 80rpx;
-    background: #efeff4;
-    align-items: center;
-    /* margin-top: 5rpx; */
+  display: flex;
+  flex-direction: row;
+  height: 80rpx;
+  width: 750rpx;
+  background: #efeff4;
+  align-items: center;
+  /* margin-top: 5rpx; */
 }
 
 .searchItem {
-    display: flex;
-    width: 710rpx;
-    /* width: 100%; */
-    background: #fff;
-    flex-direction: row;
-    border-radius: 50rpx;
-    margin-right: 20rpx;
-    margin-left: 20rpx;
+  display: flex;
+  width: 710rpx;
+  /* width: 100%; */
+  background: #fff;
+  flex-direction: row;
+  border-radius: 50rpx;
+  margin-right: 20rpx;
+  margin-left: 20rpx;
 }
 
-.search-img {
-    height: 42rpx;
-    width: 42rpx;
-    align-self: center;
-    margin-left: 10rpx;
-    margin-right: 20rpx;
+.searchImg {
+  height: 42rpx;
+  width: 42rpx;
+  align-self: center;
+  margin-left: 10rpx;
+  margin-right: 20rpx;
 }
 
-search-input {
-    flex: 1;
-    /* width: 600rpx; */
-    font-size: 30rpx;
+.searchInput {
+  flex: 1;
+  /* width: 600rpx; */
+  font-size: 35rpx;
+  align-self: center;
+  /* border: 2rpx solid #fff; */
 }
 
 .usermotto {
-  margin-top: 200px;
+  align-self: center;
+  margin-top: 200rpx;
+  font-size: 50rpx;
 }

@@ -1,71 +1,81 @@
 /**index.wxss**/
 
-.userinfo {
-  /* display: flex;
+.container {
+  display: flex;
   flex-direction: column;
-  align-items: center; */
+  height: 1070rpx;
+  align-items: center;
+  /* background:#cee6d2; */
+  padding: 0rpx;
+  justify-content: flex-start;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
   width: 750rpx;
-  height: 110rpx;
+  height: 130rpx;
   background-color: rgb(60, 150, 170);
-  position: absolute;
+  /* position: absolute; */
   /* position: relative; */
-  left: 0rpx;
-  top: 0rpx;
-  /* padding: 20px; */
   /* background-image: url */
   /* background-position:center; */
-  /* min-height: 100px; */
   /* font-size: 24px; */
-  color: black;
+  /* color: black; */
 }
 
-.not-login-avatar {
-  position: relative;
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%;
-  left: 25rpx;
-  top: 15rpx;
+.notLoginItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 90rpx;
+  height: 90rpx;
+  margin-left: 40rpx;
+  margin-right: 20rpx;
+  background-color: rgb(255, 255, 255);
+  border-radius: 100rpx;
 }
 
-.login_botton {
-  position: absolute;
+.notLoginAvatar {
+  /* display: block; */
+  align-self: stretch;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50rpx;
+}
+
+.loginBotton {
+  align-self: center;
   width: 120rpx;
   height: 60rpx;
-  top: 25rpx;
-  left: 140rpx;
-  /* margin-top: 20rpx; */
+  margin-left: 20rpx;
   background-color: burlywood;
   color: white;
   border-radius: 30rpx;
   font-size: 25rpx;
 }
 
-.login_botton::after {
+.loginBotton::after {
   border-radius: 30rpx;
   border: 0; /* 取消边框 */
 }
 
-.userinfo-avatar {
-  width: 80rpx;
-  height: 80rpx;
-  /* margin: 20rpx; */
-  border-radius: 50%;
-  position: relative;
-  left: 25rpx;
-  top: 15rpx;
-  /* right: 0px; */
-  /* bottom: 0px; */
+.userinfoAvatar {
+  align-self: center;
+  width: 90rpx;
+  height: 90rpx;
+  margin-left: 40rpx;
+  margin-right: 20rpx;
+  border-radius: 50rpx;
 }
 
-.userinfo-nickname {
-  color: rgb(255, 255, 255);
-  position: relative;
-  left: 50rpx;
-  top: -15rpx;
-  font-size: 30rpx;
-}
-
-.usermotto {
-  margin-top: 200px;
+.userinfoNickname {
+  align-self: flex-start;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  color: rgb(228, 243, 226);
+  font-size: 35rpx;
 }

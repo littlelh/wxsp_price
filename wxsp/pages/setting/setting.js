@@ -7,7 +7,6 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
-    // notLoginAvatar: "../images/not-login.png"
   },
   onPullDownRefresh: function () { // 下拉加载
     setTimeout(function () {

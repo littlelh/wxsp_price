@@ -3,9 +3,8 @@
 <view class="container">
   <view class="search">
     <view class="searchItem">
-      <!-- <view class="section_title">{{inputValue}}</view> -->
-      <image class="search-img" src="../../images/search.png"></image>
-      <input class="search-input" bindconfirm="SearchInput" placeholder="请输入想查找的产品" placeholder-style="color:#e2e2e2" value="{{inputValue}}"></input>
+      <image class="searchImg" src="../../images/search.png"></image>
+      <input class="searchInput" bindconfirm="SearchInput" placeholder="请输入想查找的产品" placeholder-style="color:#e2e2e2" value="{{inputValue}}"></input>
     </view>
   </view>
   <view class="usermotto">
