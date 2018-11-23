@@ -41,9 +41,11 @@
 
 .notLoginAvatar {
   /* display: block; */
-  align-self: stretch;
+  align-self: center;
   width: 90rpx;
   height: 90rpx;
+  margin-left: 40rpx;
+  margin-right: 20rpx;
   border-radius: 50rpx;
 }
 
@@ -52,15 +54,25 @@
   width: 120rpx;
   height: 60rpx;
   margin-left: 20rpx;
-  background-color: burlywood;
+  background-color: rgb(178, 200, 187);
   color: white;
   border-radius: 30rpx;
   font-size: 25rpx;
+  border: 1rpx solid rgb(255, 255, 255);
 }
 
 .loginBotton::after {
   border-radius: 30rpx;
   border: 0; /* 取消边框 */
+}
+
+.loginBotton text {
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.btn_hover {
+  background-color: rgb(136, 136, 136);
 }
 
 .userinfoAvatar {

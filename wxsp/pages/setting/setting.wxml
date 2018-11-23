@@ -4,11 +4,8 @@
   <view class="userinfo">
     <block wx:if="{{!hasUserInfo && canIUse}}">
       <!-- <button wx:if="{{!hasUserInfo && canIUse}}" class="login_botton" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button> -->
-      <view class="notLoginItem">
-        <image class="notLoginAvatar" src="../../images/not-login.png"></image>
-      </view>
-      <button class="loginBotton" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录 </button>
-      
+      <image class="notLoginAvatar" src="../../images/not-login.png" mode="center"></image>
+      <button class="loginBotton" open-type="getUserInfo" bindgetuserinfo="getUserInfo" hover-class="btn_hover"> 登录 </button>
     </block>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfoAvatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
