@@ -1,6 +1,7 @@
 #coding:utf-8
 
 import sys
+import os
 import re
 import requests
 from lxml import etree
@@ -16,6 +17,10 @@ favourable_url = 'https://cd.jd.com/promotion/v2?skuId=%s&area=1_72_2799_0&shopI
 
 db = pymysql.connect(host="localhost", user="todd", password="temppwd", db="wxsp_price", port=5049)
 
+g_shop_name = {}
+# 1:京东
+# 其他：未定
+
   # 京东另一种获取 skuid 的方式
   #  html = etree.HTML(r.text)
   #  datas = html.xpath('//script[contains(@charset,"gbk")]')
@@ -26,7 +31,18 @@ db = pymysql.connect(host="localhost", user="todd", password="temppwd", db="wxsp
 
   #  datas = html1.xpath('//div[contains(@class,"summary-price-wrap")]')
 
-def climb_jingdong(url):
+# 查找id对应的店名
+def QueryShopName():
+    cursor = db.cursor()
+    cursor.execute("select * from t_shop_type_name")
+    # data = cursor.fetchone()
+    datas = cursor.fetchall()
+    for data in datas:
+        g_shop_name[data[0]] = data[1]
+    # print(g_shop_name)
+    cursor.close()
+
+def CrawlJingDong(url, pid):
     price = ''  # 价格
     coupon = '0'  # 优惠券
     discount = ''  # 折扣
@@ -38,20 +54,21 @@ def climb_jingdong(url):
     response.encoding='gbk'
 
     # 抓取图片
-    image_url = '' # 图片url
-    data_url = []
-    html = etree.HTML(response.text)
-    datas = html.xpath('//div[contains(@id, "preview")]')
-    for data in datas:
-        data_url = data.xpath('div[@class="jqzoom main-img"]/img[@id="spec-img"]/@data-origin')
-    image_url = 'https:' + data_url[0]
+    save_path = img_path + str(pid) + '.jpg'
+    if not os.path.exists(save_path):
+        image_url = '' # 图片url
+        data_url = []
+        html = etree.HTML(response.text)
+        datas = html.xpath('//div[contains(@id, "preview")]')
+        for data in datas:
+            data_url = data.xpath('div[@class="jqzoom main-img"]/img[@id="spec-img"]/@data-origin')
+        image_url = 'https:' + data_url[0]
 
-    img_response = requests.get(image_url)
-    img = img_response.content
-    # TODO: img 名字
-    save_path = img_path + 'aa.jpg'
-    with open(save_path, 'wb') as f:
-        f.write(img)
+        img_response = requests.get(image_url)
+        img = img_response.content
+
+        with open(save_path, 'wb') as f:
+            f.write(img)
 
     # 抓取价格
     skuid = re.findall(r'https://item.jd.com/(.*?).html', response.url)[0]
@@ -68,9 +85,8 @@ def climb_jingdong(url):
         if len(price) == 0:
             print('Error, get price is null')
             return
-        else:
-            print(price)
 
+    # 抓取优惠券信息
     vender_id = ''
     shop_id = ''
     ids = re.findall(r"venderId:(.*?),\s.*?shopId:'(.*?)'", response.text)
@@ -84,7 +100,6 @@ def climb_jingdong(url):
     if not shop_id:
         print('Error, get shop_id failed')
 
-    # 抓取优惠券信息
     category = ''
     cats = re.findall(r"cat: \[(.*?)\]", response.text)
     for cat in cats:
@@ -100,18 +115,32 @@ def climb_jingdong(url):
                 if float(coupon) < item['discount']:
                     coupon = str(item['discount'])
             #desc1.append(u'有效期%s至%s,满%s减%s' % (start_time, end_time, fav_price, fav_count))
-        print(coupon)
+        #print(coupon)
     
     # 促销活动，不好判断，作为提示展示
     if fav_data['prom'] and fav_data['prom']['pickOneTag']:
         for item in fav_data['prom']['pickOneTag']:
-            # desc2.append(item['content'])
+            # desc2.append(item['content']) 
             discount = discount + item['name'] + ','
         #productsItem['favourableDesc1'] = ';'.join(desc2)
         discount = discount.rstrip(',')
-        print(discount)
+        #print(discount)
+    
+    return price, coupon, discount
 
-def QueryObj():
+
+# 根据不同的 shop_type 去对应网站抓取数据
+def CrawlShopTypeProduct(url, pid, shop_type):
+    swicher = {  #定义一个map，相当于定义case：func()
+        1: CrawlJingDong,
+        2: lambda :print('invalid shop_type')
+    }
+    func = swicher.get(shop_type, 2)  #从map中取出方法
+    return func(url, pid)
+
+
+def StartCrawlObj():
+    cursor = db.cursor()
     cursor.execute("select * from t_spider_obj")
     # data = cursor.fetchone()
     datas = cursor.fetchall()
@@ -120,20 +149,47 @@ def QueryObj():
         pname = data[1]
         url = data[2]
         shop_type = data[3]
-        print(pid, pname, url, shop_type)
-  
-if __name__=='__main__':
-    cursor = db.cursor()
+        info_table = 't_product_info_' + str(pid)
 
-    QueryObj()
-    for i in range(1, 2):
+        price, coupon, discount = CrawlShopTypeProduct(url, pid, shop_type)
+        cursor.execute('create table if not exists ' + info_table + '(price varchar(10) NOT NULL, '
+            + 'coupon varchar(10) DEFAULT NULL, discount varchar(60) DEFAULT NULL, shop_type smallint(5) unsigned NOT NULL, '
+            + 'time_stamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)')
+
+        insert_sql = 'insert into ' + info_table + ' (price, coupon, discount, shop_type) values ('
+        if (len(price) > 0):
+            insert_sql = insert_sql + '\'' + price + '\''
+        else:
+            insert_sql = insert_sql + '\'\''
+
+        if (len(coupon) > 0):
+            insert_sql = insert_sql + ', \'' + coupon+ '\''
+        else:
+            insert_sql = insert_sql + ', \'\''
+
+        if (len(discount) > 0):
+            insert_sql = insert_sql + ', \'' + discount + '\''
+        else:
+            insert_sql = insert_sql + ', \'\''
+
+        insert_sql = insert_sql + ', \'' + str(shop_type) + '\')'
+        
         try:
-            #url='https://item.jd.com/5853579.html'
-            url='https://item.jd.com/100000177758.html'
-            #url='https://item.jd.com/34315464306.html'
-            climb_jingdong(url)
-            pass
+            cursor.execute(insert_sql)
+            db.commit()
         except Exception as e:
-            print(e)
+            print('Error, exec sql:', insert_sql, " failed!")
+            db.rollback()
+        #time.sleep(1) # 休眠1秒
+    cursor.close()
+        
+
+if __name__=='__main__':
+    QueryShopName()
+    
+    try:
+        StartCrawlObj()
+    except Exception as e:
+        print(e)
 
     db.close()
