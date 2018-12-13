@@ -147,8 +147,9 @@ def StartCrawlObj():
     for data in datas:
         pid = data[0]
         pname = data[1]
-        url = data[2]
-        shop_type = data[3]
+        pdescribe = data[2]
+        url = data[3]
+        shop_type = data[4]
         info_table = 't_product_info_' + str(pid)
 
         price, coupon, discount = CrawlShopTypeProduct(url, pid, shop_type)
