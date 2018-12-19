@@ -10,14 +10,20 @@
   justify-content: flex-start;
 }
 
+.loginImg {
+  align-self: center;
+  width: 750rpx;
+  height: 400rpx;
+}
+
 .userinfo {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   width: 750rpx;
-  height: 130rpx;
-  background-color: rgb(60, 150, 170);
+  height: 900rpx;
+  background-color: white;
   /* position: absolute; */
   /* position: relative; */
   /* background-image: url */
@@ -28,9 +34,9 @@
 
 .loginBotton {
   align-self: center;
-  width: 120rpx;
-  height: 60rpx;
-  margin-left: 20rpx;
+  width: 300rpx;
+  height: 80rpx;
+  /* margin-left: 20rpx; */
   background-color: rgb(178, 200, 187);
   color: white;
   border-radius: 30rpx;

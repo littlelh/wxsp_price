@@ -1,7 +1,8 @@
 <!--logs.wxml-->
 
 <view class="container">
+  <image class="loginImg" src="../../images/yewenjie.jpg" mode="scaleToFill"></image>
   <view class="userinfo">
-      <button class="loginBotton" open-type="getUserInfo" bindgetuserinfo="getUserInfo" hover-class="btn_hover"> 登录 </button>
+    <button class="loginBotton" open-type="getUserInfo" bindgetuserinfo="getUserInfo" hover-class="btn_hover"> 登录 </button>
   </view>
 </view>
