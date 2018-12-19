@@ -1,0 +1,7 @@
+<!--logs.wxml-->
+
+<view class="container">
+  <view class="userinfo">
+      <button class="loginBotton" open-type="getUserInfo" bindgetuserinfo="getUserInfo" hover-class="btn_hover"> 登录 </button>
+  </view>
+</view>

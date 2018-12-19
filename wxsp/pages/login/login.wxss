@@ -1,0 +1,53 @@
+/**index.wxss**/
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 1070rpx;
+  align-items: center;
+  /* background:#cee6d2; */
+  padding: 0rpx;
+  justify-content: flex-start;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 750rpx;
+  height: 130rpx;
+  background-color: rgb(60, 150, 170);
+  /* position: absolute; */
+  /* position: relative; */
+  /* background-image: url */
+  /* background-position:center; */
+  /* font-size: 24px; */
+  /* color: black; */
+}
+
+.loginBotton {
+  align-self: center;
+  width: 120rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+  background-color: rgb(178, 200, 187);
+  color: white;
+  border-radius: 30rpx;
+  font-size: 25rpx;
+  border: 1rpx solid rgb(255, 255, 255);
+}
+
+.loginBotton::after {
+  border-radius: 30rpx;
+  border: 0; /* 取消边框 */
+}
+
+.loginBotton text {
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.btn_hover {
+  background-color: rgb(136, 136, 136);
+}

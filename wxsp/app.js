@@ -37,6 +37,10 @@ App({
               }
             }
           })
+        } else {
+          wx.reLaunch({
+            url: '/pages/login/login',
+          })
         }
       }
     })
