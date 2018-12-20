@@ -1,9 +1,13 @@
 /**index.wxss**/
 
+page {
+  height: 100%;
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  height: 1070rpx;
+  height: 100%;
   align-items: center;
   /* background:#cee6d2; */
   padding: 0rpx;
@@ -16,7 +20,7 @@
   align-items: center;
   justify-content: flex-start;
   width: 750rpx;
-  height: 130rpx;
+  height: 150rpx;
   background-color: rgb(60, 150, 170);
   /* position: absolute; */
   /* position: relative; */
@@ -26,7 +30,7 @@
   /* color: black; */
 }
 
-.notLoginItem {
+/* .notLoginItem {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -37,7 +41,7 @@
   margin-right: 20rpx;
   background-color: rgb(255, 255, 255);
   border-radius: 100rpx;
-}
+} */
 
 .notLoginAvatar {
   /* display: block; */
@@ -86,7 +90,7 @@
 
 .userinfoNickname {
   align-self: flex-start;
-  margin-top: 20rpx;
+  margin-top: 28rpx;
   margin-left: 20rpx;
   color: rgb(228, 243, 226);
   font-size: 35rpx;

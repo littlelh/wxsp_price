@@ -3,6 +3,9 @@
 <view class="container">
   <image class="loginImg" src="../../images/yewenjie.jpg" mode="scaleToFill"></image>
   <view class="userinfo">
-    <button class="loginBotton" open-type="getUserInfo" bindgetuserinfo="getUserInfo" hover-class="btn_hover"> 登录 </button>
+    <text class="title"> 欢迎来到简通 </text>
+    <text class="subTitle"> 关注最真实的价格 </text>
+    <text class="textDescribe"> \n\n该程序将获得以下授权\n\n- 获取您的公开信息（头像、昵称等）\n\n- 这点信息要来也没什么用啊...</text>
+    <button class="loginBotton" open-type="getUserInfo" bindgetuserinfo="getUserInfo" hover-class="btn_hover"> 立即授权 </button>
   </view>
 </view>

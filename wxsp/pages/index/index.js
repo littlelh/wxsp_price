@@ -17,7 +17,7 @@ Page({
   onShareAppMessage: function (res) {
     var that = this;
     return {
-      title: '你不懂的',
+      title: '最真实的价格',
       path: '/pages/index/index?id=' + that.data.scratchId,
       success: function (res) {
         // 转发成功
