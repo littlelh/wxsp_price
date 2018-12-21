@@ -3,22 +3,25 @@
 App({
   onLaunch: function () {
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    // var logs = wx.getStorageSync('logs') || []
+    // logs.unshift(Date.now())
+    // wx.setStorageSync('logs', logs)
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        if (res.code) {
-          console.log("code:" + res.code)
-        } else {
-          console.log('登录失败' + res.errMsg)
+    let login_flag = wx.getStorageSync('skey')
+    if (login_flag) {
+      wx.checkSession({
+        success: res => {
+          // session key 未过期
+        },
+        fail: res => {
+          this.UserLogin()
         }
-      }
-    })
-
+      })
+    } else {
+      // 无 skey，首次登陆
+      this.UserLogin()
+    }
+    
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -45,8 +48,23 @@ App({
       }
     })
   },
+  UserLogin: function() {
+    // 登录
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          console.log("code:" + res.code)
+          this.globalData.user_code = res.code
+        } else {
+          console.log('登录失败' + res.errMsg)
+        }
+      }
+    })
+  },
   globalData: {
     userInfo: null,
-    isAuth: false
+    isAuth: false,
+    user_code: null
   }
 })

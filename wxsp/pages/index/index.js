@@ -15,7 +15,7 @@ Page({
   //   })
   // },
   onShareAppMessage: function (res) {
-    var that = this;
+    var that = this
     return {
       title: '最真实的价格',
       path: '/pages/index/index?id=' + that.data.scratchId,
