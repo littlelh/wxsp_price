@@ -12,6 +12,7 @@ App({
       wx.checkSession({
         success: res => {
           // session key 未过期
+          this.globalData.open_id = login_flag
         },
         fail: res => {
           this.UserLogin()
@@ -56,15 +57,39 @@ App({
         if (res.code) {
           console.log("code:" + res.code)
           this.globalData.user_code = res.code
+          this.GetUserData()
         } else {
           console.log('登录失败' + res.errMsg)
         }
       }
     })
   },
+  GetUserData: function() {
+    wx.request({
+      url: 'https://www.jiantong.xyz/login',
+      method: 'GET',
+      // data: 'pageSize=1&pageNum=10',
+      data: {
+        appid: '',
+        secret: '',
+        js_code: this.globalData.user_code,
+        grant_type: 'authorization_code'
+      },
+      header: {
+        //设置参数内容类型为json
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data)
+        wx.setStorageSync('skey', res.data.openid)
+        this.globalData.open_id = res.data.openid
+      }
+    })
+  },
   globalData: {
     userInfo: null,
     isAuth: false,
-    user_code: null
+    user_code: null,
+    open_id: null
   }
 })

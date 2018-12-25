@@ -8,6 +8,7 @@
     </view>
   </view>
   <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+    <!-- <text class="user-motto">{{motto}}</text> -->
+    <image class="testImg" src="https://www.jiantong.xyz/loadimage" mode="scaleToFill"></image>
   </view>
 </view>
