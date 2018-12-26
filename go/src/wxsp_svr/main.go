@@ -10,6 +10,10 @@ import (
     "time"
     "io/ioutil"
     "encoding/json"
+    "database/sql"
+    _ "github.com/go-sql-driver/mysql"
+    "strconv"
+    "math/rand"
 )
 
 type AppInfo struct {
@@ -22,6 +26,16 @@ type AppInfo struct {
 type UserInfo struct {
     SessionKey string `json:"session_key"`
     OpenId     string `json:"openid"`
+}
+
+type GoodsInfo struct {
+    Id       int
+    Name     string
+    Describe string
+    ShopType int
+    Price    string
+    Coupon   string
+    Discount string
 }
 
 func GetOpenIdAndSessionKey(app_info AppInfo) (user_info UserInfo) {
@@ -87,7 +101,10 @@ func UserLogin(c *gin.Context) {
 }
 
 func LoadImage(c *gin.Context) {
-    file_name := "/data/todd/wxsp_image/2.jpg"
+    num := rand.Intn(8) + 1
+    fmt.Println(num)
+    file_name := fmt.Sprintf("%s%s%s", "/data/todd/wxsp_image/", strconv.Itoa(num), ".jpg")
+    // file_name := "/data/todd/wxsp_image/2.jpg"
     file, err := ioutil.ReadFile(file_name)
     if err != nil {
         fmt.Println("no such picture:", file_name)
@@ -98,6 +115,57 @@ func LoadImage(c *gin.Context) {
     // c.Header("Content-Disposition", "inline")
     c.Header("Content-Disposition", `attachment; filename=` + file_name)
     c.Data(http.StatusOK, "multipart/form-data", file)
+}
+
+func GetAllGoodsInfo(c *gin.Context) {
+    db, err := sql.Open("mysql", "todd:temppwd@tcp(127.0.0.1:5049)/wxsp_price")
+    defer db.Close()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    rows, err := db.Query("select * from t_spider_obj;")
+    defer rows.Close()
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    for rows.Next() {
+        var good_info GoodsInfo
+        var tmp_url string
+        err = rows.Scan(&good_info.Id, &good_info.Name, &good_info.Describe, &tmp_url, &good_info.ShopType)
+        if err != nil {
+            fmt.Println(err)
+            return
+        }
+
+        url := "select * from t_product_info_"
+        url = fmt.Sprintf("%s%s%s", url, strconv.Itoa(good_info.Id), " order by time_stamp DESC limit 1;")
+        tmp_rows, err := db.Query(url)
+        defer tmp_rows.Close()
+
+        for tmp_rows.Next() {
+            var time_str string 
+            err = tmp_rows.Scan(&good_info.Price, &good_info.Coupon, &good_info.Discount, &good_info.ShopType, &time_str)
+            if err != nil {
+                fmt.Println(err)
+            }
+            
+        }
+        // fmt.Println(good_info)
+    }
+
+    // c.JSON(http.StatusOK, gin.H{
+    //     "status":  gin.H{
+    //         "status_code": http.StatusOK,
+    //         "status":      "ok",
+    //     },
+    //     "message": message,
+    //     "nick":    nick,
+    // })
+
 }
 
 func main() {
@@ -111,6 +179,7 @@ func main() {
     router.GET("/func1", func1)
     router.GET("/login", UserLogin)
     router.GET("/loadimage", LoadImage)
+    router.GET("/goodsinfo", GetAllGoodsInfo)
     // router.Run()
     router.Run(":8080")
 }
