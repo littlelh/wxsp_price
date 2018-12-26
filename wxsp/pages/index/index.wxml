@@ -7,8 +7,23 @@
       <input class="searchInput" bindconfirm="SearchInput" placeholder="请输入想查找的产品" placeholder-style="color:#e2e2e2" value="{{inputValue}}"></input>
     </view>
   </view>
-  <view class="usermotto">
+  <view class="product_list">
+    <block wx:for='{{goods_list}}' wx:key='product_list' wx:for-item="item">
+    <view class="list_item">
+      <!-- <navigator url='details?name={{item.goods_name}}'> -->
+      <view class='img'>
+        <image class='g_img' src="{{item.goods_img}}" mode="scaleToFill"/>
+      </view>
+      <view class='info'>
+        <view class='title'>{{item.goods_name}}</view>
+        <view class='price'>￥{{item.goods_price}}</view>
+        <view class='num'>参数{{item.goods_describe}}</view>
+      </view>
+      <!-- </navigator> -->
+      <view class='clear'></view>
+    </view>
+    </block>
     <!-- <text class="user-motto">{{motto}}</text> -->
-    <image class="testImg" src="https://www.jiantong.xyz/loadimage" mode="scaleToFill"></image>
+    <!-- <image class="testImg" src="https://www.jiantong.xyz/loadimage" mode="scaleToFill"></image> -->
   </view>
 </view>
