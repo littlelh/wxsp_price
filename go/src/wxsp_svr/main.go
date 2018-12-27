@@ -7,7 +7,6 @@ import (
     "time"
     "io/ioutil"
     "encoding/json"
-<<<<<<< HEAD
     "database/sql"
     _ "github.com/go-sql-driver/mysql"
     "strconv"
@@ -15,8 +14,6 @@ import (
     // "io"
     // "strings"
     // "math/rand"
-=======
->>>>>>> parent of 7a2ef40... 修改http后台
 )
 
 type AppInfo struct {
@@ -31,7 +28,6 @@ type UserInfo struct {
     OpenId     string `json:"openid"`
 }
 
-<<<<<<< HEAD
 type GoodsInfo struct {
     Id       int
     Name     string
@@ -43,8 +39,6 @@ type GoodsInfo struct {
     ImgUrl   string
 }
 
-=======
->>>>>>> parent of 7a2ef40... 修改http后台
 func GetOpenIdAndSessionKey(app_info AppInfo) (user_info UserInfo) {
     url := "https://api.weixin.qq.com/sns/jscode2session?" + "appid=" + app_info.Appid + "&secret=" +
         app_info.Secret + "&js_code=" + app_info.Js_code + "&grant_type=" + app_info.Grant_type
@@ -107,13 +101,9 @@ func UserLogin(c *gin.Context) {
 }
 
 func LoadImage(c *gin.Context) {
-<<<<<<< HEAD
     index := c.Query("index")
     // file_name := fmt.Sprintf("%s%s%s", "/data/todd/wxsp_image/", strconv.Itoa(index), ".jpg")
     file_name := fmt.Sprintf("%s%s%s", "/data/todd/wxsp_image/", index, ".jpg")
-=======
-    file_name := "/data/todd/wxsp_image/2.jpg"
->>>>>>> parent of 7a2ef40... 修改http后台
     file, err := ioutil.ReadFile(file_name)
     if err != nil {
         fmt.Println("no such picture:", file_name)
@@ -126,7 +116,6 @@ func LoadImage(c *gin.Context) {
     c.Data(http.StatusOK, "multipart/form-data", file)
 }
 
-<<<<<<< HEAD
 func GetAllGoodsInfo(c *gin.Context) {
     db, err := sql.Open("mysql", "todd:temppwd@tcp(127.0.0.1:5049)/wxsp_price")
     defer db.Close()
@@ -185,8 +174,6 @@ func GetAllGoodsInfo(c *gin.Context) {
     })
 }
 
-=======
->>>>>>> parent of 7a2ef40... 修改http后台
 func main() {
     // gin.DisableConsoleColor()
     // log_file, _ := os.Create("gin.log")
@@ -198,10 +185,8 @@ func main() {
     router.GET("/func1", func1)
     router.GET("/login", UserLogin)
     router.GET("/loadimage", LoadImage)
-<<<<<<< HEAD
     router.GET("/allgoodsinfo", GetAllGoodsInfo)
-=======
->>>>>>> parent of 7a2ef40... 修改http后台
+
     // router.Run()
     router.Run(":8080")
 }
