@@ -8,7 +8,7 @@ page {
 .container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 80rpx;
   align-items: center;
   /* background:#cee6d2; */
   padding: 0rpx;
@@ -56,23 +56,15 @@ page {
   display:inline;
 } */
 
-/* .product_list {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  margin-top: 1rpx;
-  background:gray;
-  height: 100%;
-  width: 750rpx;
-} */
-
 .product_list {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  margin-top: 1rpx;
+  margin-top: 0rpx;
+  width: 740rpx;
+  /* height: 100%; */
+  /* background:gray; */
 }
 
 .product_list .list_item{
@@ -84,7 +76,9 @@ page {
   padding:0rpx;
   height:250rpx;
   width:750rpx;
-  border-bottom:2rpx solid #E8E8E8;
+  border-bottom:2rpx solid rgb(241, 237, 237);
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
 }
 
 .product_list .list_item .img {
@@ -97,39 +91,52 @@ page {
   margin-left: 30rpx;
 }
 
-.product_list .list_item .img .g_img {
+.product_list .list_item .img .goods_img {
   align-self: center;
   width:220rpx;
   height:220rpx;
 }
 
-.product_list .list_item .info{
+.product_list .list_item .goods_info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  width:300rpx;
+  width:400rpx;
   height:240rpx;
 }
 
-.product_list .list_item .info .title{
+.product_list .list_item .goods_info .g_name {
   color:#333;
-  margin-top:15rpx;
+  margin-top:5rpx;
   margin-left:40rpx;
-  font-size: 35rpx;
+  font-size: 32rpx;
 }
 
-.product_list .list_item .info .price{
-  color:#FF2727;
+.product_list .list_item .goods_info .g_describe {
+  color:#747474;
   margin-left:40rpx;
-  margin-top:20rpx;
+  margin-top:10rpx;
   font-size:30rpx;
 }
  
-.product_list .list_item .info .num{
-  color:#747474;
+.product_list .list_item .goods_info .g_price {
+  color:#FF2727;
   margin-left:40rpx;
-  margin-top:20rpx;
+  margin-top:10rpx;
   font-size:30rpx;
 }
 
+.product_list .list_item .goods_info .g_coupon {
+  color:rgb(179, 0, 0);
+  margin-left:40rpx;
+  margin-top:10rpx;
+  font-size:30rpx;
+}
+
+.product_list .list_item .goods_info .g_shoptype {
+  color:rgb(0, 0, 0);
+  margin-left:40rpx;
+  margin-top:10rpx;
+  font-size:30rpx;
+}
