@@ -6,13 +6,15 @@ App({
     // var logs = wx.getStorageSync('logs') || []
     // logs.unshift(Date.now())
     // wx.setStorageSync('logs', logs)
-
     let login_flag = wx.getStorageSync('skey')
     if (login_flag) {
       wx.checkSession({
         success: res => {
           // session key 未过期
-          this.globalData.open_id = login_flag
+          this.globalData.openId = login_flag
+          if (this.openIdReadyCallback) {
+            this.openIdReadyCallback(res)
+          }
         },
         fail: res => {
           this.UserLogin()
@@ -79,10 +81,13 @@ App({
         //设置参数内容类型为json
         'content-type': 'application/json'
       },
-      success: function (res) {
+      success: res => {
         console.log(res.data)
-        wx.setStorageSync('skey', res.data.openid)
-        this.globalData.open_id = res.data.openid
+        // wx.setStorageSync('skey', res.data.openid)
+        this.globalData.openId = res.data.openid
+        if (this.openIdReadyCallback) {
+          this.openIdReadyCallback(res)
+        }
       }
     })
   },
@@ -90,6 +95,6 @@ App({
     userInfo: null,
     isAuth: false,
     user_code: null,
-    open_id: null
+    openId: null
   }
 })

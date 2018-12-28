@@ -7,10 +7,7 @@ import (
     "time"
     "io/ioutil"
     "encoding/json"
-    "database/sql"
-    _ "github.com/go-sql-driver/mysql"
-    "strconv"
-    // "os"
+    "os"
     // "io"
     // "strings"
     // "math/rand"
@@ -116,54 +113,21 @@ func LoadImage(c *gin.Context) {
     c.Data(http.StatusOK, "multipart/form-data", file)
 }
 
-func GetAllGoodsInfo(c *gin.Context) {
-    db, err := sql.Open("mysql", "todd:temppwd@tcp(127.0.0.1:5049)/wxsp_price")
-    defer db.Close()
-    if err != nil {
-        fmt.Println(err)
-        return
-    }
 
-    db.SetMaxIdleConns(20)
-    db.SetMaxOpenConns(20)
 
-    if err := db.Ping(); err != nil{
-        fmt.Println(err)
-        return
-    }
+func GetGoodsInfo(c *gin.Context) {
+    first_index := c.DefaultQuery("first", "0")
+    last_index := c.DefaultQuery("last", "0")
 
-    rows, err := db.Query("select * from t_spider_obj;")
-    defer rows.Close()
-    if err != nil {
-        fmt.Println(err)
+    if first_index == "0" || last_index == "0" {
+        fmt.Println("param failed")
         return
     }
 
     goods_infos := make([]GoodsInfo, 0)
-    for rows.Next() {
-        var goods_info GoodsInfo
-        var tmp_url string
-        err = rows.Scan(&goods_info.Id, &goods_info.Name, &goods_info.Describe, &tmp_url, &goods_info.ShopType)
-        if err != nil {
-            fmt.Println(err)
-            return
-        }
-
-        url := "select * from t_product_info_"
-        url = fmt.Sprintf("%s%s%s", url, strconv.Itoa(goods_info.Id), " order by time_stamp DESC limit 1;")
-        tmp_rows, err := db.Query(url)
-        defer tmp_rows.Close()
-
-        for tmp_rows.Next() {
-            var time_str string 
-            err = tmp_rows.Scan(&goods_info.Price, &goods_info.Coupon, &goods_info.Discount, &goods_info.ShopType, &time_str)
-            if err != nil {
-                fmt.Println(err)
-            }
-            
-        }
-        goods_infos = append(goods_infos, goods_info)
-        // fmt.Println(goods_info)
+    if !QueryGoodsInfo(&goods_infos, first_index, last_index) {
+        fmt.Println("query goods info from mysql failed")
+        return
     }
 
     c.JSON(http.StatusOK, gin.H{
@@ -179,14 +143,22 @@ func main() {
     // log_file, _ := os.Create("gin.log")
     // gin.DefaultWriter = io.MultiWriter(log_file)
 
+    ok := init_mysql()
+	if !ok {
+		fmt.Println("init mysql failed, exit")
+		os.Exit(1)
+	}
+
     router := gin.Default()
     // router_v1 := router.Group("/v1")
     router.GET("/someGet", getting)
     router.GET("/func1", func1)
     router.GET("/login", UserLogin)
     router.GET("/loadimage", LoadImage)
-    router.GET("/allgoodsinfo", GetAllGoodsInfo)
+    router.GET("/goodsinfo", GetGoodsInfo)
 
     // router.Run()
     router.Run(":8080")
+
+    db.Close()
 }

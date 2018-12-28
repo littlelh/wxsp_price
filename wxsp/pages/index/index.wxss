@@ -13,6 +13,8 @@ page {
   /* background:#cee6d2; */
   padding: 0rpx;
   justify-content: flex-start;
+  /* border-bottom: solid 1px #eee;
+  box-shadow: 0 5px 5px rgba(0,0,0,.15); */
 }
 
 .search {
@@ -28,7 +30,6 @@ page {
 .searchItem {
   display: flex;
   width: 710rpx;
-  /* width: 100%; */
   background: #fff;
   flex-direction: row;
   border-radius: 50rpx;
@@ -46,7 +47,6 @@ page {
 
 .searchInput {
   flex: 1;
-  /* width: 600rpx; */
   font-size: 35rpx;
   align-self: center;
   /* border: 2rpx solid #fff; */
@@ -76,7 +76,7 @@ page {
   padding:0rpx;
   height:250rpx;
   width:750rpx;
-  border-bottom:2rpx solid rgb(241, 237, 237);
+  border-bottom:4rpx solid rgb(223, 217, 217);
   box-sizing: border-box;
   background-color: rgb(255, 255, 255);
 }
@@ -116,27 +116,27 @@ page {
 .product_list .list_item .goods_info .g_describe {
   color:#747474;
   margin-left:40rpx;
-  margin-top:10rpx;
+  margin-top:7rpx;
   font-size:30rpx;
 }
  
 .product_list .list_item .goods_info .g_price {
   color:#FF2727;
   margin-left:40rpx;
-  margin-top:10rpx;
+  margin-top:8rpx;
   font-size:30rpx;
 }
 
 .product_list .list_item .goods_info .g_coupon {
   color:rgb(179, 0, 0);
   margin-left:40rpx;
-  margin-top:10rpx;
+  margin-top:8rpx;
   font-size:30rpx;
 }
 
 .product_list .list_item .goods_info .g_shoptype {
   color:rgb(0, 0, 0);
   margin-left:40rpx;
-  margin-top:10rpx;
+  margin-top:8rpx;
   font-size:30rpx;
 }

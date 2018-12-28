@@ -8,6 +8,7 @@ Page({
     product_name: '',
     // goods_list: [{Price: 1999, Coupon: 300, Discount: '折扣', Name: 'test', Describe: '4GB+64GB', ImgUrl:'https://www.jiantong.xyz/loadimage?index=1'}]
     goods_list: [],
+    scroll_height: 1000,
     shop_type: {
       1: '京东自营',
       2: '不知名商家',
@@ -47,10 +48,58 @@ Page({
     })
     console.log("input product name: ", e.detail.value)
   },
+  loadMore: function () {
+    let that = this
+    let first = this.data.goods_list.length + 1
+    let last = first + 4
+    wx.request({
+      url: 'https://www.jiantong.xyz/goodsinfo?first=' + String(first) + '&last=' + String(last),
+      method: 'GET',
+      header: {
+        //设置参数内容类型为json
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        for (var index in res.data.data) {
+          res.data.data[index].ImgUrl = 'https://www.jiantong.xyz/loadimage?index=' + res.data.data[index].Id
+        }
+        console.log(res.data.data.length)
+        if (res.data.data.length == 0) {
+          wx.showToast({ //如果全部加载完成了也弹一个框
+            title: '我也是有底线的',
+            icon: 'success',
+            duration: 1000
+          });
+        } else {
+          wx.showLoading({ //期间为了显示效果可以添加一个过度的弹出框提示“加载中”  
+            title: '加载中...',
+            icon: 'loading',
+            mask: true
+          });
+          setTimeout(() => {
+            wx.hideLoading();
+          }, 1000)
+        }
+
+        let result = that.data.goods_list.concat(res.data.data);
+        that.setData({
+          goods_list: result
+        })
+      }
+    })
+  },
   onLoad: function () {
+    // TODO: 后续加入openId的逻辑
+    if (app.globalData.openId) {
+    } else {
+      app.openIdReadyCallback = res => {
+        console.log(app.globalData.openId)
+      }
+    }
+
     let that = this
     wx.request({
-      url: 'https://www.jiantong.xyz/allgoodsinfo',
+      url: 'https://www.jiantong.xyz/goodsinfo?first=1&last=5',
       method: 'GET',
       header: {
         //设置参数内容类型为json
