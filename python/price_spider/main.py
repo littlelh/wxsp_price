@@ -7,12 +7,13 @@ import requests
 from lxml import etree
 import time
 import pymysql
+import random
 #import json
 
 sys.path.append("/usr/local/lib/python3.6")
 
 img_path = '/data/todd/wxsp_image/'
-price_url = 'https://p.3.cn/prices/mgets?pduid=1280795126&skuIds=J_'
+#price_url = 'https://p.3.cn/prices/mgets?pduid=1280795126&skuIds=J_'
 favourable_url = 'https://cd.jd.com/promotion/v2?skuId=%s&area=1_72_2799_0&shopId=%s&venderId=%s&cat=%s'
 
 db = pymysql.connect(host="localhost", user="todd", password="temppwd", db="wxsp_price", port=5049)
@@ -71,6 +72,7 @@ def CrawlJingDong(url, pid):
             f.write(img)
 
     # 抓取价格
+    price_url = 'https://p.3.cn/prices/mgets?pduid=' + str(random.randint(100000, 999999)) + '&skuIds=J_'
     skuid = re.findall(r'https://item.jd.com/(.*?).html', response.url)[0]
     price_response = requests.get(price_url + str(skuid), headers=head)
     price_response.encoding='gbk'
