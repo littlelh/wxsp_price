@@ -20,6 +20,35 @@ Page({
   //     url: '../logs/logs'
   //   })
   // },
+  onLoad: function () {
+    // TODO: 后续加入openId的逻辑
+    if (app.globalData.openId) {
+    } else {
+      app.openIdReadyCallback = res => {
+        console.log(app.globalData.openId)
+      }
+    }
+
+    var that = this
+    wx.request({
+      url: 'https://www.jiantong.xyz/goodsinfo?first=1&last=5',
+      method: 'GET',
+      header: {
+        //设置参数内容类型为json
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        for (var index in res.data.data) {
+          // console.log(res.data.data[index])
+          res.data.data[index].ImgUrl = 'https://www.jiantong.xyz/loadimage?index=' + res.data.data[index].Id
+        }
+        that.setData({
+          goods_list: res.data.data
+        })
+        // console.log(that.data.goods_list)
+      }
+    })
+  },
   onShareAppMessage: function (res) {
     var that = this
     return {
@@ -49,9 +78,9 @@ Page({
     console.log("input product name: ", e.detail.value)
   },
   loadMore: function () {
-    let that = this
-    let first = this.data.goods_list.length + 1
-    let last = first + 4
+    var that = this
+    var first = this.data.goods_list.length + 1
+    var last = first + 4
     wx.request({
       url: 'https://www.jiantong.xyz/goodsinfo?first=' + String(first) + '&last=' + String(last),
       method: 'GET',
@@ -81,39 +110,34 @@ Page({
           }, 1000)
         }
 
-        let result = that.data.goods_list.concat(res.data.data);
+        var result = that.data.goods_list.concat(res.data.data);
         that.setData({
           goods_list: result
         })
       }
     })
   },
-  onLoad: function () {
-    // TODO: 后续加入openId的逻辑
-    if (app.globalData.openId) {
-    } else {
-      app.openIdReadyCallback = res => {
-        console.log(app.globalData.openId)
-      }
-    }
-
-    let that = this
-    wx.request({
-      url: 'https://www.jiantong.xyz/goodsinfo?first=1&last=5',
-      method: 'GET',
-      header: {
-        //设置参数内容类型为json
-        'content-type': 'application/json'
-      },
+  previewImage: function (e) {
+    var current = e.target.dataset.src
+    var img_list = [current]
+    wx.previewImage({
+      current: current, // 当前显示图片的https链接
+      urls: img_list // 需要预览的图片https链接列表
+    })
+  },
+  viewPriceInfo: function(e) {
+    var that = this
+    wx.navigateTo({
+      url: '../chart/chart?goods_id=' + e.currentTarget.id,
       success: function (res) {
-        for (var index in res.data.data) {
-          // console.log(res.data.data[index])
-          res.data.data[index].ImgUrl = 'https://www.jiantong.xyz/loadimage?index=' + res.data.data[index].Id
-        }
-        that.setData({
-          goods_list: res.data.data
-        })
-        // console.log(that.data.goods_list)
+        console.log("navigateTo price info page success.")
+      },
+      fail: function () {
+        console.log("navigateTo price info page fail.")
+      },
+      complete: function () {
+        // 无论成功或者失败都会调用
+        console.log("navigateTo price info page complete.")
       }
     })
   }

@@ -7,6 +7,12 @@ import (
 	"strconv"
 )
 
+const (
+    HOUR_PRICE = "0"
+    DAY_PRICE = "1"
+    MONTH_PRICE = "2"
+)
+
 var (
 	db    *sql.DB
 )
@@ -33,15 +39,15 @@ func init_mysql() bool {
 }
 
 func QueryGoodsInfo(goods_infos *[]GoodsInfo, first_index string, last_index string) bool {
-	obj_url := "select * from t_spider_obj where pid>="
-    obj_url = fmt.Sprintf("%s%s%s%s", obj_url, first_index, " and pid<=", last_index)
-    rows, err := db.Query(obj_url)
+	obj_sql := "select * from t_spider_obj where pid>="
+    obj_sql = fmt.Sprintf("%s%s%s%s", obj_sql, first_index, " and pid<=", last_index)
+    rows, err := db.Query(obj_sql)
     defer rows.Close()
     if err != nil {
         fmt.Println(err)
         return false
 	}
-	
+
 	for rows.Next() {
         var goods_info GoodsInfo
         var tmp_url string
@@ -57,13 +63,11 @@ func QueryGoodsInfo(goods_infos *[]GoodsInfo, first_index string, last_index str
         defer tmp_rows.Close()
 
         for tmp_rows.Next() {
-            var time_str string 
-            err = tmp_rows.Scan(&goods_info.Price, &goods_info.Coupon, &goods_info.Discount, &goods_info.ShopType, &time_str)
+            err = tmp_rows.Scan(&goods_info.Price, &goods_info.Coupon, &goods_info.Discount, &goods_info.ShopType, &goods_info.UpdateTime)
             if err != nil {
 				fmt.Println(err)
 				return false
             }
-            
 		}
 		// fmt.Println(goods_info)
         *goods_infos = append(*goods_infos, goods_info)
@@ -100,9 +104,45 @@ func QueryAllGoodsInfo(goods_info []GoodsInfo) {
             if err != nil {
                 fmt.Println(err)
             }
-            
         }
         goods_infos = append(goods_infos, goods_info)
         // fmt.Println(goods_info)
     }
+}
+
+func QueryHourGoodsPrice(price_infos *[]PriceInfo, goods_id string) bool {
+    sql := "select price,coupon,time_stamp from t_product_info_" + goods_id + " order by time_stamp DESC limit 12"
+    rows, err := db.Query(sql)
+    defer rows.Close()
+    if err != nil {
+        fmt.Println(err)
+        return false
+	}
+
+    for rows.Next() {
+        var price_info PriceInfo
+        var str_tmp_price, str_tmp_coupon string
+        var tmp_price, tmp_coupon float64
+        err = rows.Scan(&str_tmp_price, &str_tmp_coupon, &price_info.Time)
+        if err != nil {
+            fmt.Println(err)
+            return false
+        }
+
+        tmp_price, err = strconv.ParseFloat(str_tmp_price, 32)
+        if err != nil {
+            fmt.Println(err)
+            return false
+        }
+
+        tmp_coupon, err = strconv.ParseFloat(str_tmp_coupon, 32)
+        if err != nil {
+            fmt.Println(err)
+            return false
+        }
+
+        price_info.Price = strconv.FormatFloat(tmp_price - tmp_coupon, 'f', 2, 64)
+        *price_infos = append(*price_infos, price_info)
+    }
+    return true
 }

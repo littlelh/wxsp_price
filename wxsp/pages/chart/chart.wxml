@@ -1,0 +1,5 @@
+<!--logs.wxml-->
+
+<view class="container">
+  <canvas canvas-id="hourPriceCanvas" disable-scroll="true" class="canvas"></canvas>
+</view>

@@ -34,6 +34,12 @@ type GoodsInfo struct {
     Coupon   string
     Discount string
     ImgUrl   string
+    UpdateTime string
+}
+
+type PriceInfo struct {
+    Price string
+    Time  string
 }
 
 func GetOpenIdAndSessionKey(app_info AppInfo) (user_info UserInfo) {
@@ -113,8 +119,6 @@ func LoadImage(c *gin.Context) {
     c.Data(http.StatusOK, "multipart/form-data", file)
 }
 
-
-
 func GetGoodsInfo(c *gin.Context) {
     first_index := c.DefaultQuery("first", "0")
     last_index := c.DefaultQuery("last", "0")
@@ -138,6 +142,28 @@ func GetGoodsInfo(c *gin.Context) {
     })
 }
 
+func GetGoodsPrice(c *gin.Context) {
+    goods_id := c.DefaultQuery("goods_id", "0")
+    query_type := c.DefaultQuery("query_type", "0")
+
+    price_infos := make([]PriceInfo, 0)
+
+    switch {
+        case query_type == HOUR_PRICE:
+            if !QueryHourGoodsPrice(&price_infos, goods_id) {
+                fmt.Println("query price info from mysql failed")
+            }
+        case query_type == DAY_PRICE:
+        case query_type == MONTH_PRICE:
+        default:
+            fmt.Println("not support this query type")
+    }
+
+    c.JSON(http.StatusOK, gin.H{
+        "data": price_infos,
+    })
+}
+
 func main() {
     // gin.DisableConsoleColor()
     // log_file, _ := os.Create("gin.log")
@@ -151,11 +177,17 @@ func main() {
 
     router := gin.Default()
     // router_v1 := router.Group("/v1")
-    router.GET("/someGet", getting)
-    router.GET("/func1", func1)
+    // 用户登录
     router.GET("/login", UserLogin)
+
+    // 下载图片
     router.GET("/loadimage", LoadImage)
+
+    // 获取所有商品信息
     router.GET("/goodsinfo", GetGoodsInfo)
+
+    // 获取价格波动信息
+    router.GET("/goodsprice", GetGoodsPrice)
 
     // router.Run()
     router.Run(":8080")

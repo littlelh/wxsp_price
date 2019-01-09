@@ -1,0 +1,25 @@
+/**index.wxss**/
+
+page {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  /* background:#cee6d2; */
+  padding: 0rpx;
+  justify-content: flex-start;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 750rpx;
+  height: 150rpx;
+  background-color: rgb(60, 150, 170);
+}

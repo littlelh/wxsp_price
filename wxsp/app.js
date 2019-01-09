@@ -72,8 +72,8 @@ App({
       method: 'GET',
       // data: 'pageSize=1&pageNum=10',
       data: {
-        appid: '',
-        secret: '',
+        appid: 'wx682e545eba2a1a0a',
+        secret: '7537280e6207537aab605e1d97cf5f39',
         js_code: this.globalData.user_code,
         grant_type: 'authorization_code'
       },
@@ -83,7 +83,7 @@ App({
       },
       success: res => {
         console.log(res.data)
-        // wx.setStorageSync('skey', res.data.openid)
+        wx.setStorageSync('skey', res.data.openid)
         this.globalData.openId = res.data.openid
         if (this.openIdReadyCallback) {
           this.openIdReadyCallback(res)

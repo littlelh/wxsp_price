@@ -116,7 +116,7 @@ page {
 .product_list .list_item .goods_info .g_describe {
   color:#747474;
   margin-left:40rpx;
-  margin-top:7rpx;
+  margin-top:6rpx;
   font-size:30rpx;
 }
  
@@ -139,4 +139,11 @@ page {
   margin-left:40rpx;
   margin-top:8rpx;
   font-size:30rpx;
+}
+
+.product_list .list_item .goods_info .g_update_time {
+  color:#747474;
+  margin-left:40rpx;
+  margin-top:20rpx;
+  font-size:26rpx;
 }

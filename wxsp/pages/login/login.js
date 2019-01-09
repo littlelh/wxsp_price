@@ -1,4 +1,4 @@
-//logs.js
+//login.js
 const app = getApp()
 const util = require('../../utils/util.js')
 
