@@ -129,6 +129,8 @@ func QueryHourGoodsPrice(price_infos *[]PriceInfo, goods_id string) bool {
             return false
         }
 
+        price_info.Time = string([]rune(price_info.Time)[11:])
+
         tmp_price, err = strconv.ParseFloat(str_tmp_price, 32)
         if err != nil {
             fmt.Println(err)
@@ -141,8 +143,18 @@ func QueryHourGoodsPrice(price_infos *[]PriceInfo, goods_id string) bool {
             return false
         }
 
-        price_info.Price = strconv.FormatFloat(tmp_price - tmp_coupon, 'f', 2, 64)
+        price_info.Price = strconv.FormatFloat(tmp_price, 'f', 2, 64)
+        price_info.Coupon = strconv.FormatFloat(tmp_coupon, 'f', 2, 64)
+        
         *price_infos = append(*price_infos, price_info)
     }
+    reverse(*price_infos)
     return true
+}
+
+func reverse(s []PriceInfo) []PriceInfo {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		s[i], s[j] = s[j], s[i]
+	}
+	return s
 }

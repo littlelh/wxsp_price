@@ -7,15 +7,59 @@ var monthline_chart = null
 
 Page({
   data: {
-    goods_id: null
+    goods_id: null,
+    query_type: '0',
+    price_infos: [],
+    coupon_infos: [],
+    time_infos: [],
+    goods_maxprice: 0
   },
   onLoad: function (options) {
     this.setData({
       goods_id: options.goods_id
     })
-    this.getMothElectro()
+
+    this.getPriceInfo()
+    // this.getMothElectro()
     // wx.navigateBack({
     // })
+  },
+  getPriceInfo: function () {
+    var that = this
+    wx.request({
+      url: 'https://www.jiantong.xyz/goodsprice?goods_id=' + that.data.goods_id + '&query_type=' + that.data.query_type,
+      method: 'GET',
+      header: {
+        //设置参数内容类型为json
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({
+          price_info: [],
+          time_infos: []
+        })
+
+        var result_price = []
+        var result_time = []
+        var result_coupon = []
+        var max_price = 0
+        for (var index in res.data.data) {
+          result_price.push(res.data.data[index].Price)
+          result_time.push(res.data.data[index].Time)
+          result_coupon.push(res.data.data[index].Price - res.data.data[index].Coupon)
+          if (parseFloat(res.data.data[index].Price) > max_price) {
+            max_price = parseFloat(res.data.data[index].Price)
+          }
+        }
+        that.setData({
+          price_infos: result_price,
+          coupon_infos: result_coupon,
+          time_infos: result_time,
+          goods_maxprice: max_price
+        })
+        that.getMothElectro()
+      }
+    })
   },
   getMothElectro: function () {
     var windowWidth = 320;
@@ -25,33 +69,39 @@ Page({
     } catch (e) {
       console.error('getSystemInfoSync failed!');
     }
-    hourline_chart = new wx_chart({ //当月用电折线图配置
+    hourline_chart = new wx_chart({
       canvasId: 'hourPriceCanvas',
       type: 'line',
-      categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'], //categories X轴
+      categories: this.data.time_infos,
       animation: true,
-      background: '#f5f5f5',
+      // background: '#f5f5f5',
       series: [{
-        name: '总用电量',
-        //data: yuesimulationData.data,
-        data: [1, 6, 9, 1, 0, 2, 9, 2, 8, 6, 0, 9],
+        name: '原价格',
+        data: this.data.price_infos,
         format: function (val, name) {
-          return val.toFixed(2) + 'kWh';
+          return val.toFixed(2) + '￥';
+        }
+      },
+      {
+        name: '加优惠券价格',
+        data: this.data.coupon_infos,
+        format: function (val, name) {
+          return val.toFixed(2) + '￥';
         }
       }],
       xAxis: {
         disableGrid: true
       },
       yAxis: {
-        title: '当月用电(kWh)',
+        // title: '价格（￥）',
         format: function (val) {
           return val.toFixed(2);
         },
-        max: 20,
+        max: this.data.goods_maxprice + this.data.goods_maxprice/5,
         min: 0
       },
       width: windowWidth,
-      height: 200,
+      height: 250,
       dataLabel: false,
       dataPointShape: true,
       extra: {

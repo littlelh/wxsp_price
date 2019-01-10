@@ -38,8 +38,9 @@ type GoodsInfo struct {
 }
 
 type PriceInfo struct {
-    Price string
-    Time  string
+    Price  string
+    Coupon string
+    Time   string
 }
 
 func GetOpenIdAndSessionKey(app_info AppInfo) (user_info UserInfo) {
@@ -156,7 +157,7 @@ func GetGoodsPrice(c *gin.Context) {
         case query_type == DAY_PRICE:
         case query_type == MONTH_PRICE:
         default:
-            fmt.Println("not support this query type")
+            fmt.Println("not support this query type: ", query_type)
     }
 
     c.JSON(http.StatusOK, gin.H{

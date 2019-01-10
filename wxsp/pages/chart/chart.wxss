@@ -23,3 +23,10 @@ page {
   height: 150rpx;
   background-color: rgb(60, 150, 170);
 }
+
+.canvas {
+  align-self: center;
+  width: 100%;
+  height: 800rpx;
+  margin-top: 300rpx;
+}
