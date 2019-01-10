@@ -13,36 +13,6 @@ import (
     // "math/rand"
 )
 
-type AppInfo struct {
-    Appid      string `form:"appid" json:"appid" binding:"required"`
-    Secret     string `form:"secret" json:"secret" binding:"required"`
-    Js_code    string `form:"js_code" json:"js_code binding:"required"`
-    Grant_type string `form:"grant_type" json:"grant_type binding:"required"`
-}
-
-type UserInfo struct {
-    SessionKey string `json:"session_key"`
-    OpenId     string `json:"openid"`
-}
-
-type GoodsInfo struct {
-    Id       int
-    Name     string
-    Describe string
-    ShopType int
-    Price    string
-    Coupon   string
-    Discount string
-    ImgUrl   string
-    UpdateTime string
-}
-
-type PriceInfo struct {
-    Price  string
-    Coupon string
-    Time   string
-}
-
 func GetOpenIdAndSessionKey(app_info AppInfo) (user_info UserInfo) {
     url := "https://api.weixin.qq.com/sns/jscode2session?" + "appid=" + app_info.Appid + "&secret=" +
         app_info.Secret + "&js_code=" + app_info.Js_code + "&grant_type=" + app_info.Grant_type
@@ -147,21 +117,33 @@ func GetGoodsPrice(c *gin.Context) {
     goods_id := c.DefaultQuery("goods_id", "0")
     query_type := c.DefaultQuery("query_type", "0")
 
-    price_infos := make([]PriceInfo, 0)
+    price_infos := make([]float64, 0)
+    time_infos := make([]string, 0)
 
     switch {
         case query_type == HOUR_PRICE:
-            if !QueryHourGoodsPrice(&price_infos, goods_id) {
-                fmt.Println("query price info from mysql failed")
+            if !QueryHourGoodsPrice(&price_infos, &time_infos, goods_id) {
+                fmt.Println("query hour price info from mysql failed")
             }
         case query_type == DAY_PRICE:
+            if !QueryDayGoodsPrice(&price_infos, &time_infos, goods_id) {
+                fmt.Println("query day price info from mysql failed")
+            }
+        case query_type == WEEK_PRICE:
+            if !QueryWeekGoodsPrice(&price_infos, &time_infos, goods_id) {
+                fmt.Println("query day price info from mysql failed")
+            }
         case query_type == MONTH_PRICE:
+            if !QueryMonthGoodsPrice(&price_infos, &time_infos, goods_id) {
+                fmt.Println("query day price info from mysql failed")
+            }
         default:
             fmt.Println("not support this query type: ", query_type)
     }
 
-    c.JSON(http.StatusOK, gin.H{
-        "data": price_infos,
+    c.JSON(http.StatusOK, gin.H {
+        "price_data": price_infos,
+        "time_data": time_infos,
     })
 }
 

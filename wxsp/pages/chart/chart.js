@@ -1,18 +1,15 @@
 //chart.js
 const wx_chart = require('../../utils/wxcharts.js')
 const app = getApp()
-var hourline_chart = null
-var dayline_chart = null
-var monthline_chart = null
+var line_chart = null
 
 Page({
   data: {
+    currentData: 0,
     goods_id: null,
     query_type: '0',
     price_infos: [],
-    coupon_infos: [],
-    time_infos: [],
-    goods_maxprice: 0
+    time_infos: []
   },
   onLoad: function (options) {
     this.setData({
@@ -24,6 +21,54 @@ Page({
     // wx.navigateBack({
     // })
   },
+  //获取当前滑块的index
+  bindchange: function (e) {
+    var that = this;
+    that.setData({
+      currentData: e.detail.current
+    })
+  },
+  //点击切换，滑块index赋值
+  checkCurrent: function (e) {
+    if (this.data.currentData === e.target.dataset.current) {
+      return false;
+    } else {
+      var type = '0'
+      if (e.target.dataset.current == 0) {
+        type = '0'
+      }
+      else if (e.target.dataset.current == 1) {
+        type = '1'
+      }
+      else if (e.target.dataset.current == 2) {
+        type = '2'
+      }
+      else if (e.target.dataset.current == 3) {
+        type = '3'
+      }
+
+      this.setData({
+        currentData: e.target.dataset.current,
+        query_type: type
+      })
+
+      this.getPriceInfo()
+    }
+  },
+  touchHandler: function (e) {
+    line_chart.scrollStart(e);
+  },
+  moveHandler: function (e) {
+    line_chart.scroll(e);
+  },
+  touchEndHandler: function (e) {
+    line_chart.scrollEnd(e);
+    line_chart.showToolTip(e, {
+      format: function (item, category) {
+        return category + ' ' + item.name + ':' + item.data
+      }
+    });
+  },
   getPriceInfo: function () {
     var that = this
     wx.request({
@@ -34,29 +79,17 @@ Page({
         'content-type': 'application/json'
       },
       success: function (res) {
+        // that.setData({
+        //   price_info: [],
+        //   time_infos: []
+        // })
+
         that.setData({
-          price_info: [],
-          time_infos: []
+          price_infos: res.data.price_data,
+          time_infos: res.data.time_data
+          // topline_price: parseFloat(res.data.price_data[0]) + parseFloat(res.data.price_data[0] / 5),
         })
 
-        var result_price = []
-        var result_time = []
-        var result_coupon = []
-        var max_price = 0
-        for (var index in res.data.data) {
-          result_price.push(res.data.data[index].Price)
-          result_time.push(res.data.data[index].Time)
-          result_coupon.push(res.data.data[index].Price - res.data.data[index].Coupon)
-          if (parseFloat(res.data.data[index].Price) > max_price) {
-            max_price = parseFloat(res.data.data[index].Price)
-          }
-        }
-        that.setData({
-          price_infos: result_price,
-          coupon_infos: result_coupon,
-          time_infos: result_time,
-          goods_maxprice: max_price
-        })
         that.getMothElectro()
       }
     })
@@ -69,41 +102,34 @@ Page({
     } catch (e) {
       console.error('getSystemInfoSync failed!');
     }
-    hourline_chart = new wx_chart({
+    line_chart = new wx_chart({
       canvasId: 'hourPriceCanvas',
       type: 'line',
+      enableScroll: true,
       categories: this.data.time_infos,
-      animation: true,
+      // animation: true,
       // background: '#f5f5f5',
       series: [{
-        name: '原价格',
+        name: '京东自营价格',
         data: this.data.price_infos,
         format: function (val, name) {
-          return val.toFixed(2) + '￥';
-        }
-      },
-      {
-        name: '加优惠券价格',
-        data: this.data.coupon_infos,
-        format: function (val, name) {
-          return val.toFixed(2) + '￥';
+          return val.toFixed(2);
         }
       }],
       xAxis: {
         disableGrid: true
       },
       yAxis: {
-        // title: '价格（￥）',
+        title: '商品价格（￥）',
         format: function (val) {
           return val.toFixed(2);
         },
-        max: this.data.goods_maxprice + this.data.goods_maxprice/5,
-        min: 0
+        max: this.data.price_infos[0] + this.data.price_infos[0] / 5,
+        min: this.data.price_infos[0] - this.data.price_infos[0] / 5
       },
       width: windowWidth,
       height: 250,
-      dataLabel: false,
-      dataPointShape: true,
+      // dataPointShape: true,
       extra: {
         lineStyle: 'curve'
       }

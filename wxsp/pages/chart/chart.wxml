@@ -1,5 +1,14 @@
 <!--logs.wxml-->
 
-<view class="container">
-  <canvas canvas-id="hourPriceCanvas" disable-scroll="true" class="canvas"></canvas>
+<view class='topTabSwiper'>
+  <view class='tab  {{currentData == 0 ? "tabBorer" : ""}}'  data-current = "0" bindtap='checkCurrent'>时图</view>
+  <view class='tab  {{currentData == 1 ? "tabBorer" : ""}}'  data-current = "1" bindtap='checkCurrent'>日图</view>
+  <view class='tab  {{currentData == 2 ? "tabBorer" : ""}}'  data-current = "2" bindtap='checkCurrent'>周图</view>
+  <view class='tab  {{currentData == 3 ? "tabBorer" : ""}}'  data-current = "3" bindtap='checkCurrent'>月图</view>
+</view>
+
+<view current="{{currentData}}" class='view_swiper' style="height:100%;" duration="300" bindchange="bindchange">
+  <view class="container">
+    <canvas canvas-id="hourPriceCanvas" disable-scroll="true" class="canvas" bindtouchstart="touchHandler" bindtouchmove="moveHandler" bindtouchend="touchEndHandler"></canvas>
+  </view>
 </view>
