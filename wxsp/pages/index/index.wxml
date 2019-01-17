@@ -15,7 +15,7 @@
     <view class="list_item">
       <!-- <navigator url='details?name={{item.goods_name}}'> -->
       <view class='img'>
-        <image bindtap="previewImage" data-src="{{item.ImgUrl}}" class='goods_img' src="{{item.ImgUrl}}" mode="scaleToFill"/>
+        <image bindtap="previewImage" data-src="{{item.ImgUrl}}" class='goods_img' src="{{item.ImgUrl}}" mode="scaleToFill" lazy-load="true"/>
       </view>
       <view class='goods_info' id="{{item.Id}}" bindtap="viewPriceInfo">
         <view class='g_name'>{{item.Name}}</view>

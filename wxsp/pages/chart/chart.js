@@ -5,7 +5,7 @@ var line_chart = null
 
 Page({
   data: {
-    currentData: 0,
+    currentData: 1,
     goods_id: null,
     query_type: '0',
     price_infos: [],
