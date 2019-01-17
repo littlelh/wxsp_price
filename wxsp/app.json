@@ -9,7 +9,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#3C96AA",
-    "navigationBarTitleText": "简通",
+    "navigationBarTitleText": "简价",
     "navigationBarTextStyle":"light"
   },
   "tabBar": {

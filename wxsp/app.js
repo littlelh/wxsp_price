@@ -72,8 +72,8 @@ App({
       method: 'GET',
       // data: 'pageSize=1&pageNum=10',
       data: {
-        appid: 'wx682e545eba2a1a0a',
-        secret: '7537280e6207537aab605e1d97cf5f39',
+        appid: '',
+        secret: '',
         js_code: this.globalData.user_code,
         grant_type: 'authorization_code'
       },
