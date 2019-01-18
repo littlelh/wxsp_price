@@ -81,12 +81,12 @@ def CrawlJingDong(url, pid):
     price_list = re.findall(r'"p":"(.*?)"', price_response.text)
     if len(price_list) == 0:
         print('Error, get price list is null')
-        return
+        return '', '', ''
     else:
         price = price_list[0]
         if len(price) == 0:
             print('Error, get price is null')
-            return
+            return '', '', ''
 
     # 抓取优惠券信息
     vender_id = ''
@@ -155,6 +155,12 @@ def StartCrawlObj():
         info_table = 't_product_info_' + str(pid)
 
         price, coupon, discount = CrawlShopTypeProduct(url, pid, shop_type)
+
+        # 抓取不到价格就抓下一个，后续添加告警
+        if price == '' and coupon == '' and discount == '':
+            print("price can not catch")
+            continue
+
         cursor.execute('create table if not exists ' + info_table + '(price varchar(10) NOT NULL, '
             + 'coupon varchar(10) DEFAULT NULL, discount varchar(60) DEFAULT NULL, shop_type smallint(5) unsigned NOT NULL, '
             + 'time_stamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)')
