@@ -7,7 +7,7 @@ Page({
   data: {
     currentData: 1,
     goods_id: null,
-    query_type: '0',
+    query_type: '1',
     price_infos: [],
     time_infos: []
   },
